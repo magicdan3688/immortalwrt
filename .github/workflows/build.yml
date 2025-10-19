@@ -32,5 +32,13 @@ jobs:
 
       - name: Build firmware
         run: |
-          make -
-add build.yml for AX6000
+          make -j$(nproc) || make -j1 V=s
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: AX6000-firmware
+          path: |
+            bin/targets/**/*.bin
+            bin/targets/**/*.manifest
+            bin/packages/**/*
